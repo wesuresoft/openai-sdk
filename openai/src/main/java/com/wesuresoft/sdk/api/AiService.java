@@ -1,12 +1,12 @@
 package com.wesuresoft.sdk.api;
 
+import com.wesuresoft.sdk.bean.ai.ExplainerResult;
 import com.wesuresoft.sdk.bean.ai.PredictInfo;
+import com.wesuresoft.sdk.bean.ai.PredictResult;
 import com.wesuresoft.sdk.bean.ai.SceneResult;
 import com.wesuresoft.sdk.enums.FmtEnum;
-import com.wesuresoft.sdk.error.AiErrorException;
-import com.wesuresoft.sdk.bean.ai.ExplainerResult;
-import com.wesuresoft.sdk.bean.ai.PredictResult;
 import com.wesuresoft.sdk.enums.PlotEnum;
+import com.wesuresoft.sdk.error.AiErrorException;
 
 /**
  * @author zbq
@@ -80,4 +80,12 @@ public interface AiService {
     default ExplainerResult explain(String requestId, Long[] matchId, PlotEnum plot, FmtEnum fmt) throws AiErrorException {
         return explain(requestId, matchId, plot, fmt, null);
     }
+
+    /**
+     * 疾病识别结果报告（H5页面）
+     *
+     * @param requestId 请求id
+     * @return html string
+     */
+    String generateReportHtml(String... requestId) throws AiErrorException;
 }

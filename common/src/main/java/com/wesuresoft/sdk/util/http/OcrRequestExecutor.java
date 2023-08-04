@@ -29,7 +29,7 @@ public abstract class OcrRequestExecutor<H, P> implements RequestExecutor<String
             case APACHE_HTTP:
                 return new OcrApacheHttpRequestExecutor(requestHttp);
             default:
-                return null;
+                throw new IllegalArgumentException("非法请求参数");
         }
     }
 }

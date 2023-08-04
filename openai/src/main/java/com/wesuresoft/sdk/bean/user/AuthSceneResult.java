@@ -49,5 +49,33 @@ public class AuthSceneResult extends AiBaseResult<List<AuthSceneResult.SceneInfo
          * 性别 男、女、不限
          */
         private String gender;
+        /**
+         * 年龄最大值
+         */
+        private Integer maxAge;
+        /**
+         * 年龄最小值
+         */
+        private Integer minAge;
+        /**
+         * icd10编码
+         */
+        private String icd10;
+        /**
+         * 建议科室
+         */
+        private String suggestDepartment;
+        /**
+         * 低风险描述
+         */
+        private String lowRiskDesc;
+        /**
+         * 中风险描述
+         */
+        private String mediumRiskDesc;
+        /**
+         * 高风险描述
+         */
+        private String highRiskDesc;
     }
 }

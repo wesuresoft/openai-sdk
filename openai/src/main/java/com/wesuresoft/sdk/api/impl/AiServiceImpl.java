@@ -1,7 +1,5 @@
 package com.wesuresoft.sdk.api.impl;
 
-import com.wesuresoft.sdk.util.AiResponseUtils;
-import com.wesuresoft.sdk.util.MapUtils;
 import com.wesuresoft.sdk.api.AiService;
 import com.wesuresoft.sdk.api.OpenAiService;
 import com.wesuresoft.sdk.bean.ai.ExplainerResult;
@@ -12,6 +10,9 @@ import com.wesuresoft.sdk.enums.AiApiUrl;
 import com.wesuresoft.sdk.enums.FmtEnum;
 import com.wesuresoft.sdk.enums.PlotEnum;
 import com.wesuresoft.sdk.error.AiErrorException;
+import com.wesuresoft.sdk.util.AiResponseUtils;
+import com.wesuresoft.sdk.util.MapUtils;
+import com.wesuresoft.sdk.util.http.HtmlRequestExecutor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.HashMap;
@@ -47,5 +48,11 @@ public class AiServiceImpl implements AiService {
         MapUtils.putNonNullValue(data, "matchId", matchId);
         String responseContent = this.openAiService.post(AiApiUrl.AiOpen.EXPLAINER_URL, MapUtils.toJsonStr(data));
         return AiResponseUtils.resultHandler(responseContent, ExplainerResult.class);
+    }
+
+    @Override
+    public String generateReportHtml(String... requestId) throws AiErrorException {
+        String url = AiApiUrl.AiOpen.REPORT_URL.getUrl(openAiService.getAiConfig(), String.join(",", requestId));
+        return this.openAiService.execute(HtmlRequestExecutor.create(this.openAiService.getRequestHttp()), url, null);
     }
 }

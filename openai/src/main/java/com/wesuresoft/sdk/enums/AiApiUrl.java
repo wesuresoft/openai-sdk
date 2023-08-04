@@ -27,6 +27,14 @@ public interface AiApiUrl {
         return AiHostConfig.buildUrl(hostConfig, this.getPrefix(), this.getPath());
     }
 
+    default String getUrl(AiConfig config, String... pathVariable) {
+        AiHostConfig hostConfig = null;
+        if (Objects.nonNull(config)) {
+            hostConfig = config.getHostConfig();
+        }
+        return AiHostConfig.buildUrl(hostConfig, this.getPrefix(), String.format(this.getPath(), pathVariable));
+    }
+
     /**
      * the path
      *
@@ -72,7 +80,12 @@ public interface AiApiUrl {
         /**
          * 结果分析
          */
-        EXPLAINER_URL(AiHostConfig.OPEN_DEFAULT_HOST_URL, "/dis/explainer");
+        EXPLAINER_URL(AiHostConfig.OPEN_DEFAULT_HOST_URL, "/dis/explainer"),
+
+        /**
+         * 疾病识别报告
+         */
+        REPORT_URL(AiHostConfig.OPEN_DEFAULT_HOST_URL, "/dis/report/%s");
 
         private final String prefix;
         private final String path;
