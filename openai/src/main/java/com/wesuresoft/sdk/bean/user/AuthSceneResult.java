@@ -77,5 +77,9 @@ public class AuthSceneResult extends AiBaseResult<List<AuthSceneResult.SceneInfo
          * 高风险描述
          */
         private String highRiskDesc;
+        /**
+         * 所属系统
+         */
+        private String diseaseSystem;
     }
 }
