@@ -20,7 +20,8 @@ public class Md5Util {
         try {
             byte[] secretBytes = MessageDigest.getInstance("md5").digest(str.getBytes(StandardCharsets.UTF_8));
             StringBuilder md5code = new StringBuilder(new BigInteger(1, secretBytes).toString(16));
-            for (int i = 0; i < 32 - md5code.length(); i++) {
+            int len = 32 - md5code.length();
+            for (int i = 0; i < len; i++) {
                 md5code.insert(0, "0");
             }
             return md5code.toString();
