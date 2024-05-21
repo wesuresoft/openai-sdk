@@ -7,6 +7,8 @@ import com.wesuresoft.sdk.error.AiErrorException;
 import com.wesuresoft.sdk.util.http.RequestExecutor;
 import com.wesuresoft.sdk.util.http.RequestHttp;
 
+import java.util.Map;
+
 /**
  * @author zbq
  * @since 1.0.0
@@ -87,6 +89,29 @@ public interface OpenAiService extends com.wesuresoft.sdk.service.AiService {
     }
 
     void setAiConfig(AiConfig aiConfig);
+
+    /**
+     * 注入多个配置
+     */
+    void setMultiConfigs(Map<String, AiConfig> configs, String defaultAppKey);
+
+    /**
+     * 添加新的配置
+     */
+    void addConfig(String appKey, AiConfig aiConfig);
+
+    /**
+     * 移除配置
+     */
+    void removeConfig(String appKey);
+
+    /**
+     * 切换openAI配置
+     *
+     * @param appKey
+     * @return
+     */
+    OpenAiService switchoverTo(String appKey);
 
     /**
      * 获取配置
