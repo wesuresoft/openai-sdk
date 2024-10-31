@@ -1,23 +1,29 @@
 name: Maven Central Repo Deployment
 on:
   release:
-    types: [released]
+    types: [ released ]
 jobs:
-  release:
-    runs-on: ubuntu-18.04
+  deploy:
+    runs-on: ubuntu-20.04
     steps:
-      - name: Check out Git repository
+      - name: Configure Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '8'
+          server-id: 'ossrh'
+          server-username: '${{ secrets.OSSRH_USER }}'
+          server-password: '${{ secrets.OSSRH_PASSWORD }}'
+          gpg-private-key: '${{ secrets.GPG_SECRET }}'
+          gpg-passphrase: '${{ secrets.GPG_PASSWORD }}'
+      - name: Checkout repository
         uses: actions/checkout@v2
-
-      - name: Install Java and Maven
-        uses: actions/setup-java@v1
-        with:
-          java-version: 8
-
-      - name: Release Maven package
-        uses: samuelmeuli/action-maven-publish@v1
-        with:
-          gpg_private_key: ${{ secrets.GPG_SECRET }}
-          gpg_passphrase: ${{ secrets.GPG_PASSWORD }}
-          nexus_username: ${{ secrets.OSSRH_USER }}
-          nexus_password: ${{ secrets.OSSRH_PASSWORD }}
+      - name: Build project
+        run: |
+          java -version
+          mvn -version
+          mvn clean install -B -U -e -Pdeploy
+      - name: Deploy snapshot artifacts
+        run: |
+          echo "<settings><servers><server><id>ossrh</id><username>${{ secrets.OSSRH_USER }}</username><password>${{ secrets.OSSRH_PASSWORD }}</password></server></servers></settings>" > $HOME/.m2/settings.xml
+          mvn deploy -Pdeploy -B -e -Dmaven.test.skip=true

@@ -202,17 +202,16 @@
                 </plugins>
             </build>
 
-<!--            <distributionManagement>-->
-<!--                <snapshotRepository>-->
-<!--                    &lt;!&ndash;注意,此id必须与setting.xml中指定的一致&ndash;&gt;-->
-<!--                    <id>release</id>-->
-<!--                    <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>-->
-<!--                </snapshotRepository>-->
-<!--                <repository>-->
-<!--                    <id>release</id>-->
-<!--                    <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
-<!--                </repository>-->
-<!--            </distributionManagement>-->
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>ossrh</id>
+                    <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+                </snapshotRepository>
+                <repository>
+                    <id>ossrh</id>
+                    <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                </repository>
+            </distributionManagement>
         </profile>
 
     </profiles>
