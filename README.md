@@ -1,4 +1,4 @@
-接口说明详见[官方文档](https://openai.wesuresoft.site/docs/pages/api.html)
+接口说明详见[官方文档](https://openai.wesuresoft.site/docsv2/)
 
 SDK使用说明详见[wiki](https://github.com/wesuresoft/openai-sdk/wiki)
 
