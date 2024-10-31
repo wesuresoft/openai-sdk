@@ -3,24 +3,22 @@ on:
   release:
     types: [released]
 jobs:
-  publish:
-    runs-on: ubuntu-latest
+  deploy:
+    runs-on: ubuntu-20.04
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v2
-      - name: Install Java and Maven
-        uses: actions/setup-java@v1
+      - name: Configure Java
+        uses: actions/setup-java@v2
         with:
+          distribution: 'adopt'
           java-version: '8'
-          server-id: sonatype-nexus-staging
-          server-username: ${{ secrets.OSSRH_USER }}
-          server-password: ${{ secrets.OSSRH_PASSWORD }}
-          gpg-passphrase:  ${{ secrets.GPG_PASSWORD }}
-      - name: Publish to Maven Central Repo
-        uses: samuelmeuli/action-maven-publish@v1
-        with:
-          maven_profiles: release
-          gpg_private_key: ${{ secrets.GPG_SECRET }}
-          gpg_passphrase: ${{ secrets.GPG_PASSWORD }}
-          nexus_username: ${{ secrets.OSSRH_USER }}
-          nexus_password: ${{ secrets.OSSRH_PASSWORD }}
+      - name: Checkout repository
+        uses: actions/checkout@v1
+      - name: Build project
+        run: |
+          java -version
+          mvn -version
+          mvn clean install -B -U -e -Prelease
+      - name: Deploy snapshot artifacts
+        run: |
+          echo "<settings><servers><server><id>ossrh</id><username>${{ secrets.OSSRH_USER }}</username><password>${{ secrets.OSSRH_PASSWORD }}</password></server></servers></settings>" > $HOME/.m2/settings.xml
+          mvn deploy -Prelease -B -e -Dmaven.test.skip=true
