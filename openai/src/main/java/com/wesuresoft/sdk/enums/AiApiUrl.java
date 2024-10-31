@@ -7,6 +7,8 @@ import lombok.Getter;
 
 import java.util.Objects;
 
+import static com.wesuresoft.sdk.config.AiHostConfig.OPEN_DEFAULT_HOST_URL;
+
 /**
  * @author zbq
  * @since 1.0.0
@@ -53,10 +55,9 @@ public interface AiApiUrl {
     @Getter
     enum Ocr implements AiApiUrl {
 
-        /**
-         * 血常规报告单识别
-         */
-        CBC_URL(AiHostConfig.OPEN_DEFAULT_HOST_URL, "/ocr/report");
+        CBC_URL(AiHostConfig.OPEN_DEFAULT_HOST_URL, "/openai/api/ocr/report/content"),
+
+        CBC_ML_URL(AiHostConfig.OPEN_DEFAULT_HOST_URL, "/openai/api/ocr/report/plus/content");
 
         private final String prefix;
         private final String path;
@@ -65,27 +66,17 @@ public interface AiApiUrl {
 
     @AllArgsConstructor
     @Getter
-    enum AiOpen implements AiApiUrl {
+    enum Dict implements AiApiUrl {
 
-        /**
-         * 场景获取项目列表
-         */
-        SCENE_URL(AiHostConfig.OPEN_DEFAULT_HOST_URL, "/dis/scene"),
+        ITEM_URL(OPEN_DEFAULT_HOST_URL, "/openai/api/v2/dict/item"),
 
-        /**
-         * 疾病识别
-         */
-        PREDICT_URL(AiHostConfig.OPEN_DEFAULT_HOST_URL, "/dis/predict"),
+        DISEASE_URL(OPEN_DEFAULT_HOST_URL, "/openai/api/v2/dict/disease"),
 
-        /**
-         * 结果分析
-         */
-        EXPLAINER_URL(AiHostConfig.OPEN_DEFAULT_HOST_URL, "/dis/explainer"),
+        PACKAGE_URL(OPEN_DEFAULT_HOST_URL, "/openai/api/v2/dict/package"),
 
-        /**
-         * 疾病识别报告
-         */
-        REPORT_URL(AiHostConfig.OPEN_DEFAULT_HOST_URL, "/dis/report/%s");
+        PACKAGE_ITEM_URL(OPEN_DEFAULT_HOST_URL, "/openai/api/v2/dict/package/item"),
+
+        PACKAGE_PRECONDITION_URL(OPEN_DEFAULT_HOST_URL, "/openai/api/v2/dict/package/precondition");
 
         private final String prefix;
         private final String path;
@@ -93,30 +84,15 @@ public interface AiApiUrl {
 
     @AllArgsConstructor
     @Getter
-    enum Disease implements AiApiUrl {
+    enum Prediction implements AiApiUrl {
 
-        /**
-         * 疾病科普
-         */
-        KNOWLEDGE_URL(AiHostConfig.OPEN_DEFAULT_HOST_URL, "/dis/knowledge");
+        PREDICT_URL(OPEN_DEFAULT_HOST_URL, "/openai/api/v2/predict"),
 
-        private final String prefix;
-        private final String path;
-    }
+        SURVEY_URL(OPEN_DEFAULT_HOST_URL, "/openai/api/v2/survey"),
 
-    @AllArgsConstructor
-    @Getter
-    enum Survey implements AiApiUrl {
+        SURVEY_RESULT_URL(OPEN_DEFAULT_HOST_URL, "/openai/api/v2/survey/result"),
 
-        /**
-         * 疾病问卷
-         */
-        SURVEY_URL(AiHostConfig.OPEN_DEFAULT_HOST_URL, "/survey"),
-
-        /**
-         * 问卷提交
-         */
-        SURVEY_SUBMIT_URL(AiHostConfig.OPEN_DEFAULT_HOST_URL, "/survey/submit");
+        CREATE_PDF_URL(OPEN_DEFAULT_HOST_URL, "/report/create/pdf");
 
         private final String prefix;
         private final String path;
@@ -124,12 +100,19 @@ public interface AiApiUrl {
 
     @AllArgsConstructor
     @Getter
-    enum User implements AiApiUrl {
+    enum Scale implements AiApiUrl {
 
-        /**
-         * 授权场景获取
-         */
-        AUTH_SCENE_URL(AiHostConfig.OPEN_DEFAULT_HOST_URL, "/open/user");
+        LIST_URL(OPEN_DEFAULT_HOST_URL, "/openai/api/v2/scale/list"),
+
+        SURVEY_URL(OPEN_DEFAULT_HOST_URL, "/openai/api/v2/scale/survey"),
+
+        INSTRUCTION_URL(OPEN_DEFAULT_HOST_URL, "/openai/api/v2/scale/instruction"),
+
+        SUBMIT_URL(OPEN_DEFAULT_HOST_URL, "/openai/api/v2/scale/submit"),
+
+        RESULT_URL(OPEN_DEFAULT_HOST_URL, "/openai/api/v2/scale/result"),
+
+        VIEW_URL(OPEN_DEFAULT_HOST_URL, "/openai/api/v2/scale/view");
 
         private final String prefix;
         private final String path;

@@ -25,7 +25,7 @@ public class AiConfig {
     /**
      * 版本号
      */
-    private String version = "v1";
+    private String version = "v2";
 
     /**
      * 域名配置

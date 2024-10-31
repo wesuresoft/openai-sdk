@@ -17,7 +17,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Builder
 public class AiError implements Serializable {
-    private static final long serialVersionUID = 7869786563361406291L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * 错误代码.
@@ -48,7 +48,7 @@ public class AiError implements Serializable {
             return "错误代码：" + this.code + ", 错误信息：" + this.msg;
         }
 
-        return "错误代码：" + this.code + ", 错误信息：" + this.msg + "，微信原始报文：" + this.json;
+        return "错误代码：" + this.code + ", 错误信息：" + this.msg + "，原始报文：" + this.json;
     }
 
 }
