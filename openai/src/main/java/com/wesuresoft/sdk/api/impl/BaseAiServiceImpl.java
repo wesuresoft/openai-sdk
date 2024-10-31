@@ -32,19 +32,16 @@ import java.util.Objects;
 public abstract class BaseAiServiceImpl<H, P> implements OpenAiService, RequestHttp<H, P> {
     @Getter
     @Setter
-    private AiService aiService = new AiServiceImpl(this);
+    private DictService dictService = new DictServiceImpl(this);
     @Getter
     @Setter
-    private DiseaseService diseaseService = new DiseaseServiceImpl(this);
+    private PredictionService predictionService = new PredictionServiceImpl(this);
+    @Getter
+    @Setter
+    private ScaleService scaleService = new ScaleServiceImpl(this);
     @Getter
     @Setter
     private OcrService ocrService = new OcrServiceImpl(this);
-    @Getter
-    @Setter
-    private SurveyService surveyService = new SurveyServiceImpl(this);
-    @Getter
-    @Setter
-    private UserService userService = new UserServiceImpl(this);
 
     private Map<String, AiConfig> configMap = new HashMap<>();
 

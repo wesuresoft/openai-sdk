@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AiHostConfig {
-    public static final String OPEN_DEFAULT_HOST_URL = "https://openai.wesuresoft.com/api";
+    public static final String OPEN_DEFAULT_HOST_URL = "https://aicloud.wesuresoft.com/gw";
 
     private String openHost;
 

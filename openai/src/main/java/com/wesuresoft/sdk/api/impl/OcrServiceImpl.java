@@ -4,7 +4,6 @@ import com.wesuresoft.sdk.api.OcrService;
 import com.wesuresoft.sdk.api.OpenAiService;
 import com.wesuresoft.sdk.bean.OcrInfo;
 import com.wesuresoft.sdk.bean.ocr.OcrResult;
-import com.wesuresoft.sdk.enums.AiApiUrl;
 import com.wesuresoft.sdk.error.AiErrorException;
 import com.wesuresoft.sdk.util.AiResponseUtils;
 import com.wesuresoft.sdk.util.Base64Encoder;
@@ -19,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.wesuresoft.sdk.enums.AiApiUrl.Ocr.CBC_ML_URL;
+import static com.wesuresoft.sdk.enums.AiApiUrl.Ocr.CBC_URL;
+
 /**
  * @author zbq
  * @since 1.0.0
@@ -28,7 +30,7 @@ public class OcrServiceImpl implements OcrService {
     private final OpenAiService openAiService;
 
     @Override
-    public OcrResult ocr(String[] imgContents, Integer reportType) throws AiErrorException {
+    public OcrResult ocr(String[] imgContents, Integer reportType, boolean isMl) throws AiErrorException {
         List<String> data = new ArrayList<>();
         for (String content : imgContents) {
             if (StringUtils.isNotBlank(content)) {
@@ -41,12 +43,12 @@ public class OcrServiceImpl implements OcrService {
         }
         ocrInfo.setImgContents(data.toArray(new String[0]));
         String responseContent = this.openAiService.execute(OcrRequestExecutor.create(this.openAiService.getRequestHttp()),
-                AiApiUrl.Ocr.CBC_URL.getUrl(this.openAiService.getAiConfig()), ocrInfo);
+                isMl ? CBC_ML_URL.getUrl(this.openAiService.getAiConfig()) : CBC_URL.getUrl(this.openAiService.getAiConfig()), ocrInfo);
         return AiResponseUtils.resultHandler(responseContent, OcrResult.class);
     }
 
     @Override
-    public OcrResult ocr(File[] files, Integer reportType) throws IOException, AiErrorException {
+    public OcrResult ocr(File[] files, Integer reportType, boolean isMl) throws IOException, AiErrorException {
         String[] imgContents = new String[files.length];
         for (int i = 0; i < files.length; i++) {
             File file = files[i];
@@ -57,11 +59,11 @@ public class OcrServiceImpl implements OcrService {
                 imgContents[i] = Base64Encoder.encode(FileUtils.copyToByteArray(file));
             }
         }
-        return ocr(imgContents, reportType);
+        return ocr(imgContents, reportType, isMl);
     }
 
     @Override
-    public OcrResult ocr(Integer reportType, String... imgUrl) throws IOException, AiErrorException {
+    public OcrResult ocr(Integer reportType, boolean isMl, String... imgUrl) throws IOException, AiErrorException {
         String[] imgContents = new String[imgUrl.length];
         for (int i = 0; i < imgUrl.length; i++) {
             byte[] bytes = FileUtils.imageUrlToBase64(imgUrl[i]);
@@ -73,6 +75,6 @@ public class OcrServiceImpl implements OcrService {
             }
         }
 
-        return ocr(imgContents, reportType);
+        return ocr(imgContents, reportType, isMl);
     }
 }

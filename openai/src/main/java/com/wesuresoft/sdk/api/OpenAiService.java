@@ -16,29 +16,24 @@ import java.util.Map;
 public interface OpenAiService extends com.wesuresoft.sdk.service.AiService {
 
     /**
-     * 返回ai类功能实现类
+     * 返回字典实现类
      */
-    AiService getAiService();
+    DictService getDictService();
 
     /**
-     * 返回疾病类功能实现类
+     * 返回预测实现类
      */
-    DiseaseService getDiseaseService();
+    PredictionService getPredictionService();
+
+    /**
+     * 返回量表实现类
+     */
+    ScaleService getScaleService();
 
     /**
      * 返回图像识别类功能实现类
      */
     OcrService getOcrService();
-
-    /**
-     * 返回问卷类功能实现类
-     */
-    SurveyService getSurveyService();
-
-    /**
-     * 返回用户类功能实现类
-     */
-    UserService getUserService();
 
     /**
      * 初始化http请求对象.
