@@ -112,7 +112,9 @@ public interface AiApiUrl {
 
         RESULT_URL(OPEN_DEFAULT_HOST_URL, "/openai/api/v2/scale/result"),
 
-        VIEW_URL(OPEN_DEFAULT_HOST_URL, "/openai/api/v2/scale/view");
+        VIEW_URL(OPEN_DEFAULT_HOST_URL, "/openai/api/v2/scale/view"),
+
+        SURVEY_ID_URL(OPEN_DEFAULT_HOST_URL, "/openai/api/v2/scale/%s/survey");
 
         private final String prefix;
         private final String path;

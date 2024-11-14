@@ -55,4 +55,10 @@ public class ScaleServiceImpl implements ScaleService {
                 buildParam("recordNo", recordNo, "surveyId", surveyId));
         return AiResponseUtils.resultHandler(responseContent, ScaleSurvey.class);
     }
+
+    @Override
+    public ScaleSurveyId getScaleSurveyId(Integer packageCode) {
+        String responseContent = this.openAiService.get(AiApiUrl.Scale.SURVEY_ID_URL, new String[]{String.valueOf(packageCode)});
+        return AiResponseUtils.resultHandler(responseContent, ScaleSurveyId.class);
+    }
 }

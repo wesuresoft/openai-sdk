@@ -48,15 +48,16 @@ public abstract class BaseAiServiceImpl<H, P> implements OpenAiService, RequestH
     private int retrySleepMillis = 1000;
     private int maxRetryTimes = 5;
 
-
     @Override
-    public String get(AiApiUrl url, String queryParam) throws AiErrorException {
-        return this.get(url.getUrl(getAiConfig()), queryParam);
+    public String get(AiApiUrl url, String queryParam, String... pathVariable) throws AiErrorException {
+        return this.get(Objects.isNull(pathVariable) ? url.getUrl(getAiConfig())
+                : url.getUrl(getAiConfig(), pathVariable), queryParam);
     }
 
     @Override
-    public String post(AiApiUrl url, String postData) throws AiErrorException {
-        return this.post(url.getUrl(getAiConfig()), postData);
+    public String post(AiApiUrl url, String postData, String... pathVariable) throws AiErrorException {
+        return this.post(Objects.isNull(pathVariable) ? url.getUrl(getAiConfig())
+                : url.getUrl(getAiConfig(), pathVariable), postData);
     }
 
     @Override

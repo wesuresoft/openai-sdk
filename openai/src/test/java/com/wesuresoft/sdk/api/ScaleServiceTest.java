@@ -58,4 +58,9 @@ class ScaleServiceTest {
     void getScaleView() {
         Assertions.assertNotNull(scaleService.getScaleView("APIV2:57f50f563b50699e73ab7ef95b1fd68e", 2));
     }
+
+    @Test
+    void getScaleSurveyId() {
+        Assertions.assertNotNull(scaleService.getScaleSurveyId(2));
+    }
 }

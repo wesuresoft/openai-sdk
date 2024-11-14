@@ -4,6 +4,7 @@ import com.wesuresoft.sdk.bean.SignHeader;
 import com.wesuresoft.sdk.config.AiConfig;
 import com.wesuresoft.sdk.enums.AiApiUrl;
 import com.wesuresoft.sdk.error.AiErrorException;
+import com.wesuresoft.sdk.service.AiService;
 import com.wesuresoft.sdk.util.http.RequestExecutor;
 import com.wesuresoft.sdk.util.http.RequestHttp;
 
@@ -13,7 +14,7 @@ import java.util.Map;
  * @author zbq
  * @since 1.0.0
  */
-public interface OpenAiService extends com.wesuresoft.sdk.service.AiService {
+public interface OpenAiService extends AiService {
 
     /**
      * 返回字典实现类
@@ -113,25 +114,43 @@ public interface OpenAiService extends com.wesuresoft.sdk.service.AiService {
      */
     AiConfig getAiConfig();
 
+    default String get(AiApiUrl url, String... pathVariable) throws AiErrorException {
+        return get(url, null, pathVariable);
+    }
+
+    default String get(AiApiUrl url, String queryParam) throws AiErrorException {
+        return get(url, queryParam, null);
+    }
+
     /**
      * 当本Service没有实现某个API的时候，可以用这个，针对所有的GET请求.
      *
-     * @param url        请求接口地址
-     * @param queryParam 参数
+     * @param url          请求接口地址（参数使用%s代替）
+     * @param queryParam   参数
+     * @param pathVariable 参数
      * @return 接口响应字符串 string
      * @throws AiErrorException 异常
      */
-    String get(AiApiUrl url, String queryParam) throws AiErrorException;
+    String get(AiApiUrl url, String queryParam, String... pathVariable) throws AiErrorException;
+
+    default String post(AiApiUrl url, String... pathVariable) throws AiErrorException {
+        return post(url, null, pathVariable);
+    }
+
+    default String post(AiApiUrl url, String postData) throws AiErrorException {
+        return post(url, postData, null);
+    }
 
     /**
      * 当本Service没有实现某个API的时候，可以用这个，针对所有的POST请求.
      *
-     * @param url      请求接口地址
-     * @param postData 请求参数json值
+     * @param url          请求接口地址（参数使用%s代替）
+     * @param postData     请求参数json值
+     * @param pathVariable 参数
      * @return 接口响应字符串 string
      * @throws AiErrorException 异常
      */
-    String post(AiApiUrl url, String postData) throws AiErrorException;
+    String post(AiApiUrl url, String postData, String... pathVariable) throws AiErrorException;
 
     /**
      * 向开放平台发送请求

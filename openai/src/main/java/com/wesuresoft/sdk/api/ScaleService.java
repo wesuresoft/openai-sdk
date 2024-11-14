@@ -39,4 +39,9 @@ public interface ScaleService {
      * 查看量表结论
      */
     ScaleSurvey getScaleView(String recordNo, Integer surveyId);
+
+    /**
+     * 查询检测包可用的量表id
+     */
+    ScaleSurveyId getScaleSurveyId(Integer packageCode);
 }
