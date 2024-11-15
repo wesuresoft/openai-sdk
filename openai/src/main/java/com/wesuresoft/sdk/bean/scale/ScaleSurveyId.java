@@ -8,5 +8,5 @@ import java.util.List;
  * @author zbq
  * @since 2.0.0
  */
-public class ScaleSurveyId extends AiBaseResult<List<Long>> {
+public class ScaleSurveyId extends AiBaseResult<List<Integer>> {
 }
