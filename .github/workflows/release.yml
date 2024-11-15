@@ -1,29 +1,26 @@
-name: Maven Central Repo Deployment
+name: Publish package to the Maven Central Repository
 on:
   release:
-    types: [ released ]
+    types: [released]
 jobs:
-  deploy:
-    runs-on: ubuntu-20.04
+  publish:
+    runs-on: ubuntu-latest
     steps:
-      - name: Configure Java
-        uses: actions/setup-java@v2
+      - uses: actions/checkout@v4
+      - name: Set up Maven Central Repository
+        uses: actions/setup-java@v4
         with:
-          distribution: 'adopt'
           java-version: '8'
-          server-id: 'ossrh'
-          server-username: '${{ secrets.OSSRH_USER }}'
-          server-password: '${{ secrets.OSSRH_PASSWORD }}'
-          gpg-private-key: '${{ secrets.GPG_SECRET }}'
-          gpg-passphrase: '${{ secrets.GPG_PASSWORD }}'
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Build project
-        run: |
-          java -version
-          mvn -version
-          mvn clean install -B -U -e -Pdeploy
-      - name: Deploy snapshot artifacts
-        run: |
-          echo "<settings><servers><server><id>ossrh</id><username>${{ secrets.OSSRH_USER }}</username><password>${{ secrets.OSSRH_PASSWORD }}</password></server></servers></settings>" > $HOME/.m2/settings.xml
-          mvn deploy -Pdeploy -B -e -Dmaven.test.skip=true
+          distribution: 'adopt'
+          server-id: ossrh
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-private-key: GPG_PRIVATE_KEY
+          gpg-passphrase: GPG_PASSPHRASE
+      - name: Publish package
+        run: mvn deploy -Pdeploy -B -e -Dmaven.test.skip=true
+        env:
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USER }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_SECRET }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSWORD }}
