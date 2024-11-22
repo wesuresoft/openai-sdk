@@ -28,25 +28,25 @@ public class DictServiceImpl implements DictService {
 
     @Override
     public DiseaseInterface disease(Integer diseaseCode) {
-        String responseContent = this.openAiService.get(AiApiUrl.Dict.ITEM_URL, buildParam("diseaseCode", diseaseCode));
+        String responseContent = this.openAiService.get(AiApiUrl.Dict.DISEASE_URL, buildParam("diseaseCode", diseaseCode));
         return AiResponseUtils.resultHandler(responseContent, DiseaseInterface.class);
     }
 
     @Override
     public PackageDetail packages(Integer packageCode) {
-        String responseContent = this.openAiService.get(AiApiUrl.Dict.ITEM_URL, buildParam("packageCode", packageCode));
+        String responseContent = this.openAiService.get(AiApiUrl.Dict.PACKAGE_URL, buildParam("packageCode", packageCode));
         return AiResponseUtils.resultHandler(responseContent, PackageDetail.class);
     }
 
     @Override
     public ItemInterface packageItems(Integer packageCode) {
-        String responseContent = this.openAiService.get(AiApiUrl.Dict.ITEM_URL, buildParam("packageCode", packageCode));
+        String responseContent = this.openAiService.get(AiApiUrl.Dict.PACKAGE_ITEM_URL, buildParam("packageCode", packageCode));
         return AiResponseUtils.resultHandler(responseContent, ItemInterface.class);
     }
 
     @Override
     public PackagePrecondition packagePrecondition(Integer packageCode) {
-        String responseContent = this.openAiService.get(AiApiUrl.Dict.ITEM_URL, buildParam("packageCode", packageCode));
+        String responseContent = this.openAiService.get(AiApiUrl.Dict.PACKAGE_PRECONDITION_URL, buildParam("packageCode", packageCode));
         return AiResponseUtils.resultHandler(responseContent, PackagePrecondition.class);
     }
 }
