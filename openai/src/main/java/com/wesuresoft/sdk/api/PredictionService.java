@@ -37,4 +37,16 @@ public interface PredictionService {
      * 创建pdf报告
      */
     CreatePdf createPdf(CreatePdfParam param);
+
+    /**
+     * 获取智能报告url
+     *
+     * @param objectName 文件名
+     */
+    IRResult getUrlIR(String objectName);
+
+    /**
+     * 智能报告生成
+     */
+    IRResult creatPdfIR(IRBaseParam param, String templateName);
 }

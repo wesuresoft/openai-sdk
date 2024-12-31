@@ -92,7 +92,11 @@ public interface AiApiUrl {
 
         SURVEY_RESULT_URL(OPEN_DEFAULT_HOST_URL, "/openai/api/v2/survey/result"),
 
-        CREATE_PDF_URL(OPEN_DEFAULT_HOST_URL, "/report/create/pdf");
+        CREATE_PDF_URL(OPEN_DEFAULT_HOST_URL, "/report/create/pdf"),
+
+        CREATE_IR_PDF_URL(OPEN_DEFAULT_HOST_URL, "/ir/api/pdf"),
+
+        IR_PDF_URL(OPEN_DEFAULT_HOST_URL, "/ir/url");
 
         private final String prefix;
         private final String path;

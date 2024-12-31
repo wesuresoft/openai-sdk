@@ -7,8 +7,7 @@ import com.wesuresoft.sdk.enums.AiApiUrl;
 import com.wesuresoft.sdk.util.AiResponseUtils;
 import lombok.RequiredArgsConstructor;
 
-import static com.wesuresoft.sdk.util.PayloadUtils.buildParam;
-import static com.wesuresoft.sdk.util.PayloadUtils.toJsonStr;
+import static com.wesuresoft.sdk.util.PayloadUtils.*;
 
 /**
  * @author zbq
@@ -52,5 +51,18 @@ public class PredictionServiceImpl implements PredictionService {
     public CreatePdf createPdf(CreatePdfParam param) {
         String responseContent = this.openAiService.post(AiApiUrl.Prediction.CREATE_PDF_URL, toJsonStr(param));
         return AiResponseUtils.resultHandler(responseContent, CreatePdf.class);
+    }
+
+    @Override
+    public IRResult getUrlIR(String objectName) {
+        String responseContent = this.openAiService.get(AiApiUrl.Prediction.IR_PDF_URL, buildParam("objectName", urlEncode(objectName)));
+        return AiResponseUtils.resultHandler(responseContent, IRResult.class);
+    }
+
+    @Override
+    public IRResult creatPdfIR(IRBaseParam param, String templateName) {
+        String url = AiApiUrl.Prediction.CREATE_IR_PDF_URL.getUrl(this.openAiService.getAiConfig());
+        String responseContent = this.openAiService.post(url + "?template=" + templateName, toJsonStr(param));
+        return AiResponseUtils.resultHandler(responseContent, IRResult.class);
     }
 }

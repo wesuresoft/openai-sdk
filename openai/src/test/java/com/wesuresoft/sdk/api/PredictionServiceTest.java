@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.wesuresoft.sdk.bean.prediction.CreatePdfParam;
 import com.wesuresoft.sdk.bean.prediction.PredictionParam;
 import com.wesuresoft.sdk.bean.prediction.SurveyParam;
+import com.wesuresoft.sdk.bean.prediction.ir.IRHzbLiaoParam;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -61,5 +62,17 @@ class PredictionServiceTest {
         String jsonStr = "{\"report\": {\"tplMd5\": \"12d3434351148e0bda4b44a4b24281af\",\"tplUuid\": \"\",\"templateContentId\": null,\"tplName\": \"糖并\",\"paperCode\": null,\"rptUploadUrl\": null,\"remark\": null,\"tplDownloadUrl\": \"https://jf.chnlis.com:2170/dis-identify-api/yzb/report/template/download/19\",\"tplUploadUrl\": null,\"report_PATH\": null},\"dataset\": {\"recordNo\": \"APIV2:7a6050463d717373b6a2a01eb2e9925f\",\"symptom1\": [{\"symptom\": null}],\"patientInfo\": [{\"doctor\": \"\",\"gender\": \"男\",\"patType\": \"\",\"name\": \"测试报表服务\",\"testTime\": \"\",\"generateTime\": \"\",\"department\": \"\",\"age\": 56}],\"hospital\": [{\"name\": \"测试机构2\",\"shortName\": \"test2\",\"phone\": \"1234\",\"address\": \"西安\"}]}}";
         CreatePdfParam param = new Gson().fromJson(jsonStr, CreatePdfParam.class);
         assertNotNull(predictionService.createPdf(param));
+    }
+
+    @Test
+    void getUrlIR() {
+        assertNotNull(predictionService.getUrlIR("report/568dfd72-08b3-xxxx-9dc5-c89638551640.pdf"));
+    }
+
+    @Test
+    void creatPdfIR() {
+        String jsonStr = "{\"gender\": \"男\",\"hospitalName\": \"1公卫体检\",\"generateTime\": \"2025-11-22\",\"type\": \"体检\",\"name\": \"测试T\",\"packageName\": \"[糖尿病并发症]\",\"riskOverview\": {\"riskLevel\": 2,\"historyList\": [{\"date\": 1732261213000,\"risk\": 0.468034}],\"predict\": 0.468034,\"introduction\": \"根据AI评估结果，您存在轻微的糖尿病并发症风险。您需要更加关注自己的健康状况，采取更加积极的措施来降低并发症的风险。建议您与您的医生保持紧密的联系，调整治疗方案，如优化用药、加强血糖监测等。同时，注意改善饮食更好的管理糖尿病来降低并发症的风险！\"},\"age\": 31}";
+        IRHzbLiaoParam param = new Gson().fromJson(jsonStr, IRHzbLiaoParam.class);
+        assertNotNull(predictionService.creatPdfIR(param, "hzb_liao"));
     }
 }
