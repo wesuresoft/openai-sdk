@@ -63,7 +63,7 @@ public interface OpenAiService extends AiService {
      * @return SignHeader 对象
      */
     default SignHeader getSignHeader(long timestamp) {
-        return getSignHeader(timestamp, "v1");
+        return getSignHeader(timestamp, "v2");
     }
 
     /**
@@ -81,7 +81,7 @@ public interface OpenAiService extends AiService {
      * @return SignHeader 对象
      */
     default SignHeader getSignHeader() {
-        return getSignHeader("v1");
+        return getSignHeader("v2");
     }
 
     void setAiConfig(AiConfig aiConfig);
