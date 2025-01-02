@@ -46,7 +46,7 @@ public interface OpenAiService extends AiService {
      *
      * @return RequestHttp对象 request http
      */
-    RequestHttp getRequestHttp();
+    <H, P> RequestHttp<H, P> getRequestHttp();
 
     /**
      * 获取授权请求头
@@ -104,8 +104,8 @@ public interface OpenAiService extends AiService {
     /**
      * 切换openAI配置
      *
-     * @param appKey
-     * @return
+     * @param appKey /
+     * @return /
      */
     OpenAiService switchoverTo(String appKey);
 
