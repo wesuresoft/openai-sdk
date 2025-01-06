@@ -21,6 +21,10 @@ public class IRHzbLiaoParam extends IRBaseParam {
         private Float predict;
         private Integer riskLevel;
         private String introduction;
+        /**
+         * @since 2.0.4
+         */
+        private Boolean hasAbnormal;
         private List<DateRiskDTO> historyList;
     }
 
@@ -31,5 +35,9 @@ public class IRHzbLiaoParam extends IRBaseParam {
          */
         private String date;
         private Float risk;
+        /**
+         * @since 2.0.4
+         */
+        private Integer riskLevel;
     }
 }
