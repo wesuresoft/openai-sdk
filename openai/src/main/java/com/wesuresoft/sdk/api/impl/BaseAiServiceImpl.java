@@ -177,31 +177,24 @@ public abstract class BaseAiServiceImpl<H, P> implements OpenAiService, RequestH
         do {
             try {
                 return this.executeInternal(executor, uri, data, signHeader.toHeaders());
-            } catch (AiErrorException e) {
-                // 500 系统错误, 1000ms后重试
-                if (Objects.isNull(e.getCode()) || (e.getCode() == 500 || e.getCode() == 1)) {
-                    if (StringUtils.isNotEmpty(e.getMessage()) && e.getMessage().contains("检验项目")) {
-                        throw e;
-                    }
-
-                    // 判断是否已经超了最大重试次数
-                    if (retryTimes + 1 > this.maxRetryTimes) {
-                        log.warn("重试达到最大次数【{}】", maxRetryTimes);
-                        log.error("请求异常", e);
-                        //最后一次重试失败后，直接抛出异常，不再等待
-                        throw e;
-                    }
-
-                    int sleepMillis = this.retrySleepMillis * (1 << retryTimes);
-                    try {
-                        log.warn("openAI系统错误，{} ms 后重试(第{}次)", sleepMillis, retryTimes + 1);
-                        Thread.sleep(sleepMillis);
-                    } catch (InterruptedException e1) {
-                        throw new AiErrorException(e1);
-                    }
-                } else {
-                    throw e;
+            } catch (IOException e) {
+                // 服务错误, 1000ms后重试
+                // 判断是否已经超了最大重试次数
+                if (retryTimes + 1 > this.maxRetryTimes) {
+                    log.warn("重试达到最大次数【{}】", maxRetryTimes);
+                    log.error("请求异常", e);
+                    //最后一次重试失败后，直接抛出异常，不再等待
+                    throw new AiErrorException(e);
                 }
+
+                int sleepMillis = this.retrySleepMillis * (1 << retryTimes);
+                try {
+                    log.warn("openAI系统错误，{} ms 后重试(第{}次)", sleepMillis, retryTimes + 1);
+                    Thread.sleep(sleepMillis);
+                } catch (InterruptedException e1) {
+                    throw new AiErrorException(e1);
+                }
+
             }
         } while (retryTimes++ < this.maxRetryTimes);
 
@@ -209,7 +202,7 @@ public abstract class BaseAiServiceImpl<H, P> implements OpenAiService, RequestH
         throw new AiErrorException("openAI服务端异常，超出重试次数");
     }
 
-    protected <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data, Header[] headers) throws AiErrorException {
+    protected <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data, Header[] headers) throws AiErrorException, IOException {
         try {
             T result = executor.execute(uri, data, headers);
             if (log.isDebugEnabled()) {
@@ -221,7 +214,7 @@ public abstract class BaseAiServiceImpl<H, P> implements OpenAiService, RequestH
             throw e;
         } catch (IOException e) {
             log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uri, new Gson().toJson(data), e.getMessage());
-            throw new AiErrorException(e);
+            throw e;
         }
     }
 }
