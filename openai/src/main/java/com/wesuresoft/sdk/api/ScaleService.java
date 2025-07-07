@@ -40,6 +40,8 @@ public interface ScaleService {
      */
     ScaleSurvey getScaleView(String recordNo, Integer surveyId);
 
+    ScaleSurvey getScaleView(String recordNo, Integer surveyId, String dir);
+
     /**
      * 查询检测包可用的量表id
      */

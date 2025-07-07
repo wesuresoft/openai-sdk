@@ -118,7 +118,9 @@ public interface AiApiUrl {
 
         VIEW_URL(OPEN_DEFAULT_HOST_URL, "/openai/api/v2/scale/view"),
 
-        SURVEY_ID_URL(OPEN_DEFAULT_HOST_URL, "/openai/api/v2/scale/%s/survey");
+        SURVEY_ID_URL(OPEN_DEFAULT_HOST_URL, "/openai/api/v2/scale/%s/survey"),
+
+        IMAGE_URL(OPEN_DEFAULT_HOST_URL, "/openai/public%s");
 
         private final String prefix;
         private final String path;
