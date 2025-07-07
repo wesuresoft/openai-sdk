@@ -51,6 +51,20 @@ public class ScaleSurvey extends AiBaseResult<ScaleSurvey.Item> {
          * 体质信息列表
          */
         private List<Constitution> constitutions;
+
+        /**
+         * 图片路径
+         */
+        private String imgPath;
+
+         /**
+         * 测试结果
+         */
+        private String conclusion;
+
+        private String description;
+
+        private Integer score;
     }
 
     @Data
