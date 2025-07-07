@@ -14,14 +14,14 @@
 
     <organization>
         <name>wesuresoft</name>
-        <url>https://github.com/wesuresoft/openai-sdk</url>
+        <url>https://github.com/wesuresoft</url>
     </organization>
     <developers>
         <developer>
             <name>zbq</name>
             <email>zbqdwq@126.com</email>
-            <organization>cnzbq</organization>
-            <organizationUrl>https://github.com/cnzbq/openai-sdk</organizationUrl>
+            <organization>wesuresoft</organization>
+            <organizationUrl>https://github.com/wesuresoft</organizationUrl>
             <roles>
                 <role>Developer</role>
             </roles>
