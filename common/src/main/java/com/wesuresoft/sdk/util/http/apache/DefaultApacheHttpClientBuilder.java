@@ -54,17 +54,17 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
     private int connectionRequestTimeout = -1;
 
     /**
-     * 建立链接的超时时间,默认为5000ms.由于是在链接池获取链接,此设置应该并不起什么作用
+     * 建立链接的超时时间,默认为10000ms.由于是在链接池获取链接,此设置应该并不起什么作用
      * <p>
      * 设置为零时不超时,一直等待.
-     * 设置为负数是使用系统默认设置(非上述的5000ms的默认值,而是httpclient的默认设置).
+     * 设置为负数是使用系统默认设置(非上述的10000ms的默认值,而是httpclient的默认设置).
      * </p>
      */
-    private int connectionTimeout = 5000;
+    private int connectionTimeout = 10000;
     /**
-     * 默认NIO的socket超时设置,默认5000ms.
+     * 默认NIO的socket超时设置,默认120000ms.
      */
-    private int soTimeout = 5000;
+    private int soTimeout = 120000;
     /**
      * 空闲链接的超时时间,默认60000ms.
      * <p>
